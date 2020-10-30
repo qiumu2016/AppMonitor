@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:textSize="25sp"
+        android:lineHeight="100px"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:text="今天该应用每小时使用的次数">
+    </TextView>
+</LinearLayout>

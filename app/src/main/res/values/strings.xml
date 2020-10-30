@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">AppMonitor</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">AppMonitor</string>
+    <string name="nav_header_subtitle">demo@appmonitor.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">主页</string>
+    <string name="app_list">应用序列</string>
+    <string name="app_research">应用分析</string>
+</resources>
