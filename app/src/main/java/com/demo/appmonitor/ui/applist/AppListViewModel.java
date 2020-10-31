@@ -9,8 +9,8 @@ public class AppListViewModel extends ViewModel {
     private MutableLiveData<String> mText;
 
     public AppListViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is applist fragment");
+//        mText = new MutableLiveData<>();
+//        mText.setValue("This is applist fragment");
     }
 
     public LiveData<String> getText() {

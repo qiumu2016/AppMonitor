@@ -85,6 +85,7 @@ public class ResearchFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_research, container, false);
         mView = root;
         lView = root.findViewById(R.id.ll1);
+        lView.setDivider(null);
 
         // lists 是 放入到listView 中的数据
         lists = new ArrayList<Map<String, Object>>();
@@ -299,14 +300,23 @@ public class ResearchFragment extends Fragment {
             Drawable icon = applicationInfo.loadIcon(getActivity().getPackageManager());
             Bitmap img = null;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && icon instanceof AdaptiveIconDrawable) {
-                Bitmap bitmap = Bitmap.createBitmap(icon.getIntrinsicWidth(), icon.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+                Bitmap bitmap = Bitmap.createBitmap(
+                        icon.getIntrinsicWidth(),
+                        icon.getIntrinsicHeight(),
+                        Bitmap.Config.ARGB_8888
+                );
                 Canvas canvas = new Canvas(bitmap);
                 icon.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
                 icon.draw(canvas);
                 img = bitmap;
             } else {
-                BitmapDrawable d = (BitmapDrawable) icon;
-                img = d.getBitmap();
+                // 有些应用好像并没有图片，VectorDrawable 不能转 BitmapDrawable
+                try{
+                    BitmapDrawable d = (BitmapDrawable) icon;
+                    img = d.getBitmap();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
             }
 
             String fn = name + ".png";
@@ -363,7 +373,11 @@ public class ResearchFragment extends Fragment {
     public ArrayList<Map<String, Object>> getData() {
         // 从数据库读取数据到listView
         dbHelper = new MyDatabaseHelper(mView.getContext(), "phone_data.db", null, 1);
-        Cursor cursor = dbHelper.getReadableDatabase().query("data", null, null, null, null, null, "-last_time");
+
+        // orderBy加了个DESC，按last_time的倒序查询
+        Cursor cursor = dbHelper
+                .getReadableDatabase()
+                .query("data", null, null, null, null, null, "last_time DESC");
         if (cursor.moveToFirst()) {
             do {
                 String name = cursor.getString(cursor.getColumnIndex("name"));
