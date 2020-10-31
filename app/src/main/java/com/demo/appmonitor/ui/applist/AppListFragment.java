@@ -3,6 +3,7 @@ package com.demo.appmonitor.ui.applist;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
@@ -91,49 +92,42 @@ public class AppListFragment extends Fragment {
     private ArrayList<HashMap<String, Object>> getAppList(int type) {
 
         // 查询已经安装的应用程序
-        List<ApplicationInfo> applicationInfos = pm
-                .getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES);
-
-        // 对获得的应用列表信息，进行排序
-        Collections.sort(
-                applicationInfos,
-                new ApplicationInfo.DisplayNameComparator(pm)
-        );
+        List<PackageInfo> applicationInfos = pm.getInstalledPackages(0);
 
         ArrayList<HashMap<String, Object>> displayList = new ArrayList<HashMap<String, Object>>();;
         switch (type) {
             case FILTER_ALL_APP:// 所有应用
-                for (ApplicationInfo applicationInfo : applicationInfos) {
-                    HashMap<String, Object> temp = getAppInfo(applicationInfo);
+                for (PackageInfo appInfo : applicationInfos) {
+                    HashMap<String, Object> temp = getAppInfo(appInfo);
 
                     displayList.add(temp);
                 }
                 break;
             case FILTER_SYSTEM_APP:// 系统应用
-                for (ApplicationInfo applicationInfo : applicationInfos) {
-                    if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-                        HashMap<String, Object> temp = getAppInfo(applicationInfo);
+                for (PackageInfo appInfo : applicationInfos) {
+                    if ((appInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                        HashMap<String, Object> temp = getAppInfo(appInfo);
                         displayList.add(temp);
                     }
                 }
             case FILTER_THIRD_APP:// 第三方应用
 
-                for (ApplicationInfo applicationInfo : applicationInfos) {
+                for (PackageInfo appInfo : applicationInfos) {
                     // 非系统应用
-                    if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) <= 0) {
-                        HashMap<String, Object> temp = getAppInfo(applicationInfo);
+                    if ((appInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) <= 0) {
+                        HashMap<String, Object> temp = getAppInfo(appInfo);
                         displayList.add(temp);
                     }
                     // 系统应用，但更新后变成不是系统应用了
-                    else if ((applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
-                        HashMap<String, Object> temp = getAppInfo(applicationInfo);
+                    else if ((appInfo.applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+                        HashMap<String, Object> temp = getAppInfo(appInfo);
                         displayList.add(temp);
                     }
                 }
             case FILTER_SDCARD_APP:// SDCard应用
-                for (ApplicationInfo applicationInfo : applicationInfos) {
-                    if (applicationInfo.flags == ApplicationInfo.FLAG_SYSTEM) {
-                        HashMap<String, Object> temp = getAppInfo(applicationInfo);
+                for (PackageInfo appInfo : applicationInfos) {
+                    if (appInfo.applicationInfo.flags == ApplicationInfo.FLAG_SYSTEM) {
+                        HashMap<String, Object> temp = getAppInfo(appInfo);
                         displayList.add(temp);
                     }
                 }
@@ -146,7 +140,7 @@ public class AppListFragment extends Fragment {
     /**
      * 获取应用信息
      */
-    private HashMap<String, Object> getAppInfo(ApplicationInfo applicationInfo) {
+    private HashMap<String, Object> getAppInfo(PackageInfo pkgInfo) {
 //        AppInfo appInfo = new AppInfo();
 //        appInfo.setAppIcon(applicationInfo.loadIcon(pm)); // 应用图标
 //        appInfo.setAppName(applicationInfo.loadLabel(pm).toString()); // 应用名
@@ -156,6 +150,7 @@ public class AppListFragment extends Fragment {
 //                + "\n包名：" + appInfo.getPackageName()
 //                + "\n应用类型："+ appInfo.getAppTypeCN()
 //        );
+        ApplicationInfo applicationInfo = pkgInfo.applicationInfo;
         AppInfo temp = new AppInfo();
         temp.setFlags(applicationInfo.flags);
 
@@ -164,6 +159,10 @@ public class AppListFragment extends Fragment {
         appInfo.put("appName",applicationInfo.loadLabel(pm).toString()); // 应用名
         appInfo.put("packageName",applicationInfo.packageName); // 包名
         appInfo.put("type",temp.getAppTypeCN());
+//        appInfo.put("install_time",pkgInfo.firstInstallTime);
+//        appInfo.put("versionCode",pkgInfo.versionCode);
+//        appInfo.put("versionName",pkgInfo.versionName);
+
 
         return appInfo;
     }
