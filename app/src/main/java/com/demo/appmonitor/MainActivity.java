@@ -43,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         // 判断是否有权限，无权限则跳到权限设置界面
-        if (!isPermission()) {
-            startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
-        }
+//        if (!isPermission()) {
+//            startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
+//        }
     }
 
     @Override

@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
             textView.setText("已授权！");
             textView.setClickable(false);
         } else {
-            textView.setText("打开授权页面进行授权！");
+            textView.setText("点击打开授权页面进行授权！");
             textView.setClickable(true);
         }
         mView = root;

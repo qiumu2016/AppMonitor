@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,23 +38,14 @@ import java.util.ListIterator;
 
 public class AppListFragment extends Fragment {
 
-    private AppListViewModel appListViewModel;
+    private View appListView;
+    private ProgressBar progressBar;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        appListViewModel =
-                ViewModelProviders.of(this).get(AppListViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_applist, container, false);
-//        final TextView textView = root.findViewById(R.id.text_gallery);
-//        appListViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
-
-
-        return root;
+        appListView = inflater.inflate(R.layout.fragment_applist, container, false);
+        return appListView;
     }
 
     @Override

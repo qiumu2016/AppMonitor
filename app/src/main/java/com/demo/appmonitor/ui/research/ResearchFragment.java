@@ -58,7 +58,6 @@ import static android.content.Context.USAGE_STATS_SERVICE;
 
 public class ResearchFragment extends Fragment {
 
-    private ResearchViewModel researchViewModel;
     private View mView;
     private ListView lView;
     private SimpleAdapter mAdapter;
@@ -80,8 +79,6 @@ public class ResearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        researchViewModel =
-                ViewModelProviders.of(this).get(ResearchViewModel.class);
         View root = inflater.inflate(R.layout.fragment_research, container, false);
         mView = root;
         lView = root.findViewById(R.id.ll1);
