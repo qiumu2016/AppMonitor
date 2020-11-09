@@ -1,14 +1,11 @@
 package com.demo.appmonitor.ui.applist;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,25 +13,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.demo.appmonitor.R;
 import com.demo.appmonitor.domain.AppInfo;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class AppListFragment extends Fragment {
 
@@ -171,8 +159,8 @@ public class AppListFragment extends Fragment {
                 new String[]{"appIcon","appName","packageName","type"},
                 new int[]{
                         R.id.image2,
-                        R.id.text2,
-                        R.id.text3,
+                        R.id.research_last,
+                        R.id.research_packagename,
                         R.id.text4
                 }
         );

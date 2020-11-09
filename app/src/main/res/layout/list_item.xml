@@ -21,7 +21,7 @@
             android:translationY="25dp" />
 
     <ImageView
-        android:id="@+id/image1"
+        android:id="@+id/research_appimage"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:src="@mipmap/ic_launcher"
@@ -49,7 +49,7 @@
 <!--                android:text="应用名称:"-->
 <!--                ></TextView>-->
             <TextView
-                android:id="@+id/text1"
+                android:id="@+id/research_appname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="名字："
@@ -69,7 +69,7 @@
 <!--                android:text="应用包名:"-->
 <!--                ></TextView>-->
             <TextView
-                android:id="@+id/text3"
+                android:id="@+id/research_packagename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="包名："
@@ -84,13 +84,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="上次结束时间:"
-                ></TextView>
+                android:text="上次结束时间:" />
             <TextView
-                android:id="@+id/text2"
+                android:id="@+id/research_last"
                 android:layout_marginLeft="30px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
