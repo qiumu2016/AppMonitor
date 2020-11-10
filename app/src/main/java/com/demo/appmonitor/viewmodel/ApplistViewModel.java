@@ -15,7 +15,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.demo.appmonitor.domain.AppInfo;
 import com.demo.appmonitor.model.AppItem;
 import com.demo.appmonitor.model.ResearchItem;
 
