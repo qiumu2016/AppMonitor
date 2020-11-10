@@ -3,25 +3,25 @@ package com.demo.appmonitor.model;
 import android.graphics.drawable.Drawable;
 
 public class ResearchItem {
-    private Drawable image;
+    private String image;
     private String appName;
     private String packageName;
     private String lastTime;
 
     public ResearchItem(){};
 
-    public ResearchItem(Drawable image, String appName, String packageName, String lastTime) {
+    public ResearchItem(String image, String appName, String packageName, String lastTime) {
         this.image = image;
         this.appName = appName;
         this.packageName = packageName;
         this.lastTime = lastTime;
     }
 
-    public Drawable getImageId() {
+    public String  getImageId() {
         return image;
     }
 
-    public void setImageId(Drawable imageId) {
+    public void setImageId(String imageId) {
         this.image = imageId;
     }
 

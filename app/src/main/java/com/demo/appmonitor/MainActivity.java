@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
@@ -39,9 +40,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /**
+         * 判断有无权限
+         */
+        if (!isPermission()) {
+            startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
+        }
+        /**
+         * 启动service
+         */
+        Log.i("dong","启动service");
+        Intent intent1 = new Intent(MainActivity.this, MyService.class);
+        startService(intent1);
+        Log.i("dong","连接好了");
         // 加载启动页 view pager
         renderViewPager();
-
         // 加载toolbar - 也就是以前的那坨
         renderToolBar();
     }
