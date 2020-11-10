@@ -5,16 +5,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-
+    <ProgressBar
+        android:id="@+id/applist_progress_bar"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:indeterminateDrawable="@drawable/progressbar" />
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/recycle_view" />
+            android:id="@+id/app_recycle_view" />
 
-    <ListView
-            android:id="@+id/fragment_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-    </ListView>
+<!--    <ListView-->
+<!--            android:id="@+id/fragment_list"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+<!--    </ListView>-->
 
 </LinearLayout>

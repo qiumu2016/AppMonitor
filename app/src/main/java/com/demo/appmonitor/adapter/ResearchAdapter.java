@@ -39,7 +39,7 @@ public class ResearchAdapter extends RecyclerView.Adapter<ResearchAdapter.ViewHo
     @NonNull
     @Override
     public ResearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,parent,false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.research_list_item,parent,false);
         final ResearchAdapter.ViewHolder holder = new ResearchAdapter.ViewHolder(view);
         holder.researchItemView.setOnClickListener(new View.OnClickListener() {
             @Override

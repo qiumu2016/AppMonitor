@@ -7,7 +7,7 @@
         >
 
     <ImageView
-            android:id="@+id/image2"
+            android:id="@+id/app_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@mipmap/ic_launcher"
@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
             <TextView
-                    android:id="@+id/research_last"
+                    android:id="@+id/app_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="名字："
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
             <TextView
-                    android:id="@+id/research_packagename"
+                    android:id="@+id/app_packagename"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="包名："
@@ -56,7 +56,7 @@
                 android:orientation="horizontal"
                 >
             <TextView
-                    android:id="@+id/text4"
+                    android:id="@+id/app_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="应用类型:"

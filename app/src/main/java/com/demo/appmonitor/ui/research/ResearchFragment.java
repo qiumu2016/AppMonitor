@@ -93,7 +93,7 @@ public class ResearchFragment extends Fragment {
         initRecyclerView();
         progressBar = mContentView.findViewById(R.id.reseach_progress_bar);
         recyclerView.setVisibility(View.GONE);
-        researchViewModel.flashList();
+        //researchViewModel.flashList();
         researchViewModel.getList().observe(getViewLifecycleOwner(), new Observer<ArrayList<ResearchItem>>() {
             @Override
             public void onChanged(ArrayList<ResearchItem> researchItems) {
@@ -113,7 +113,7 @@ public class ResearchFragment extends Fragment {
 //
 //        lists = getData();
 //
-//        mAdapter = new SimpleAdapter(root.getContext(), lists, R.layout.list_item
+//        mAdapter = new SimpleAdapter(root.getContext(), lists, R.layout.research_list_item
 //                , new String[]{"image", "name", "last_time","package"}
 //                , new int[]{R.id.research_appimage, R.id.research_appname, R.id.research_last,R.id.research_packagename});
 //
