@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager = (SCViewPager) findViewById(R.id.viewpager_main_activity);
         mDotsView = (DotsView) findViewById(R.id.dotsview_main);
-        mDotsView.setDotRessource(R.drawable.dot_selected, R.drawable.dot_unselected);
+        mDotsView.setDotRessource(R.drawable.view_dot_selected, R.drawable.view_dot_unselected);
         mDotsView.setNumberOfPage(NUM_PAGES);
 
         mPageAdapter = new SCViewPagerAdapter(getSupportFragmentManager());

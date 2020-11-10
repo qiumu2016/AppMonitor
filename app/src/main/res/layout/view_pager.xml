@@ -31,7 +31,7 @@
         android:paddingRight="50dp"
         android:layout_alignParentTop="true"
         android:rotation="-10"
-        android:src="@drawable/name_tag"/>
+        android:src="@drawable/view_name_tag"/>
 
     <ImageView
         android:id="@+id/imageview_main_activity_currently_work"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="225dp"
-        android:src="@drawable/poweredby"/>
+        android:src="@drawable/view_poweredby"/>
 
 <!--    <ImageView-->
 <!--        android:id="@+id/imageview_main_activity_at_skex"-->
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/step1"/>
+        android:src="@drawable/view_step1"/>
 
     <ImageView
         android:id="@+id/imageview_main_activity_django_python"
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="400dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/django_python"/>
+        android:src="@drawable/view_django_python"/>
 
     <ImageView
         android:id="@+id/imageview_main_activity_mobile"
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/auth"/>
+        android:src="@drawable/view_auth"/>
 
     <ImageView
         android:id="@+id/imageview_main_activity_but"
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/step2"/>
+        android:src="@drawable/view_step2"/>
 
     <ImageView
             android:id="@+id/imageview_main_activity_why"
@@ -86,14 +86,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="200dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/restart"/>
+            android:src="@drawable/view_restart"/>
     <ImageView
         android:id="@+id/imageview_main_activity_diploma"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="400dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/diploma"/>
+        android:src="@drawable/view_diploma"/>
 
 
 
@@ -103,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/step3"/>
+        android:src="@drawable/view_step3"/>
 
     <ImageView
         android:id="@+id/imageview_main_arduino"
@@ -112,7 +112,7 @@
         android:layout_below="@id/imageview_main_future"
         android:layout_marginTop="80dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/arduino"/>
+        android:src="@drawable/view_arduino"/>
 
     <ImageView
         android:id="@+id/imageview_main_raspberry_pi"
@@ -121,7 +121,7 @@
         android:layout_below="@id/imageview_main_arduino"
         android:layout_marginTop="40dp"
             android:layout_centerHorizontal="true"
-        android:src="@drawable/button"/>
+        android:src="@drawable/view_button"/>
 
 <!--    <ImageView-->
 <!--        android:id="@+id/imageview_main_connected_device"-->
