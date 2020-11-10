@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.demo.appmonitor.R;
 import com.demo.appmonitor.adapter.AppAdapter;
-import com.demo.appmonitor.domain.AppInfo;
 import com.demo.appmonitor.model.AppItem;
 import com.demo.appmonitor.viewmodel.ApplistViewModel;
 import com.demo.appmonitor.viewmodel.ResearchViewModel;
@@ -165,14 +164,12 @@ public class AppListFragment extends Fragment {
 ////                + "\n应用类型："+ appInfo.getAppTypeCN()
 ////        );
 //        ApplicationInfo applicationInfo = pkgInfo.applicationInfo;
-//        AppInfo temp = new AppInfo();
-//        temp.setFlags(applicationInfo.flags);
 //
 //        HashMap<String, Object> appInfo = new HashMap<String, Object>();
 //        appInfo.put("appIcon",applicationInfo.loadIcon(pm)); // 应用图标
 //        appInfo.put("appName",applicationInfo.loadLabel(pm).toString()); // 应用名
 //        appInfo.put("packageName",applicationInfo.packageName); // 包名
-//        appInfo.put("type",temp.getAppTypeCN());
+//        appInfo.put("type",AppItem.getAppTypeCN());
 ////        appInfo.put("install_time",pkgInfo.firstInstallTime);
 ////        appInfo.put("versionCode",pkgInfo.versionCode);
 ////        appInfo.put("versionName",pkgInfo.versionName);
