@@ -2,9 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     tool:context
+
     <item
-        android:id="@+id/open_in_website"
+        android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="@string/open_in_website"
-         />
+        android:title="@string/action_settings"
+        />
 </menu>

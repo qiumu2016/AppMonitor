@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -36,6 +38,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContentView = inflater.inflate(R.layout.fragment_home, container, false);
+        setHasOptionsMenu(true);
         email = (TextView)mContentView.findViewById(R.id.fra_pro_email);
         email.setText("3527995642@qq.com");
         email.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +53,12 @@ public class HomeFragment extends Fragment {
         initData();
         initRecyclerView();
         return mContentView;
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.profile_menu, menu);
     }
     private void initRecyclerView() {
         RecyclerView recyclerView = (RecyclerView) mContentView.findViewById(R.id.recylerview_activity);

@@ -1,6 +1,8 @@
 package com.demo.appmonitor.ui.research;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
@@ -22,14 +24,19 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,8 +65,10 @@ import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static android.content.Context.USAGE_STATS_SERVICE;
@@ -70,6 +79,7 @@ public class ResearchFragment extends Fragment {
     private RecyclerView recyclerView;
     private View mContentView;
     private ProgressBar progressBar;
+    private Thread newThread;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -78,12 +88,20 @@ public class ResearchFragment extends Fragment {
         initRecyclerView();
         progressBar = mContentView.findViewById(R.id.reseach_progress_bar);
         recyclerView.setVisibility(View.GONE);
-        try {
-            researchViewModel.setContext(this.getContext());
-            researchViewModel.flashList();
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        researchViewModel.setContext(this.getContext());
+        newThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    researchViewModel.flashList();
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        newThread.start();
+
         researchViewModel.getList().observe(getViewLifecycleOwner(), new Observer<ArrayList<ResearchItem>>() {
             @Override
             public void onChanged(ArrayList<ResearchItem> researchItems) {
@@ -102,6 +120,7 @@ public class ResearchFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         researchViewModel = new ViewModelProvider(this).get(ResearchViewModel.class);
         researchViewModel.setContext(this.getActivity());
     }
@@ -110,5 +129,39 @@ public class ResearchFragment extends Fragment {
         recyclerView = mContentView.findViewById(R.id.reseach_recyc);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
     }
-
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                selectTime();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    private void selectTime(){
+        //注意，有多种时间选择器可以使用，东哥最好找一个适合自己的，这个只是样例
+        int year = 2020,month = 11,day = 10;
+        DatePickerDialog dialog = new DatePickerDialog(getActivity(), AlertDialog.THEME_HOLO_LIGHT,
+            new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDayOfMonth) {
+                    //修改textView
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(selectedYear, selectedMonth, selectedDayOfMonth);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("MM月dd日", Locale.CHINA);
+                }
+            }, year, month, day);
+        dialog.show();
+        //然后执行以下操作
+        //recyclerView.setVisibility(View.GONE);
+        //progressBar.setVisibility(View.VISIBLE);
+        //异步加载新数据，在ViewModel中设置新的接受时间范围的函数，开新的thread进行加载
+    }
 }
