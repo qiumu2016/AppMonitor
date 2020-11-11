@@ -122,10 +122,10 @@ public class ResearchAdapter extends RecyclerView.Adapter<ResearchAdapter.ViewHo
                         new DataPoint(18, demo.containsKey("18")?demo.get("18"):0),
                         new DataPoint(19, demo.containsKey("19")?demo.get("19"):0),
                         new DataPoint(20, demo.containsKey("20")?demo.get("20"):0),
-                        new DataPoint(21, demo.containsKey("21")?demo.get("21"):0),
-                        new DataPoint(22, demo.containsKey("22")?demo.get("22"):0),
-                        new DataPoint(23, demo.containsKey("23")?demo.get("23"):0),
-                        new DataPoint(24, demo.containsKey("24")?demo.get("24"):0),
+//                        new DataPoint(21, demo.containsKey("21")?demo.get("21"):0),
+//                        new DataPoint(22, demo.containsKey("22")?demo.get("22"):0),
+//                        new DataPoint(23, demo.containsKey("23")?demo.get("23"):0),
+//                        new DataPoint(24, demo.containsKey("24")?demo.get("24"):0),
                 });
                 graph.addSeries(series);
 
