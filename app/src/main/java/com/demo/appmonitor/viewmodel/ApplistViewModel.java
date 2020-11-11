@@ -5,11 +5,13 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.demo.appmonitor.MainActivity;
 import com.demo.appmonitor.R;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -18,6 +20,7 @@ import androidx.lifecycle.ViewModel;
 import com.demo.appmonitor.model.AppItem;
 import com.demo.appmonitor.model.ResearchItem;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,8 +44,13 @@ public class ApplistViewModel extends ViewModel {
         // 获取App list
         appList = getAppListEntry();
 
-        // 向applist中添加数据
-        data.setValue((ArrayList<AppItem>) appList);
+        ((MainActivity) context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // 向applist中添加数据
+                data.setValue((ArrayList<AppItem>) appList);
+            }
+        });
     }
 
 
@@ -127,7 +135,14 @@ public class ApplistViewModel extends ViewModel {
         ApplicationInfo applicationInfo = pkgInfo.applicationInfo;
 
         AppItem appInfo = new AppItem();
-        appInfo.setAppIcon(applicationInfo.loadIcon(pm)); // 应用图标
+
+        String name = (String) pm.getApplicationLabel(applicationInfo);
+        String image = context.getFilesDir() + File.separator + name + ".png";
+        appInfo.setImage(image); // 应用图标
+
+        // /data/user/0/com.demo.appmonitor/files/YouTube.png
+        Log.i("image",image);
+
         appInfo.setAppName(applicationInfo.loadLabel(pm).toString()); // 应用名
         appInfo.setPackageName(applicationInfo.packageName); // 包名
         appInfo.setType(AppItem.getAppTypeCN(applicationInfo.flags));
@@ -135,36 +150,4 @@ public class ApplistViewModel extends ViewModel {
         return appInfo;
     }
 
-    /**
-     *  渲染列表
-     */
-//    private void renderList(ArrayList<HashMap<String, Object>> list){
-//        ListView listView = getActivity().findViewById(R.id.fragment_list);
-//        SimpleAdapter simpleAdapter = new SimpleAdapter(
-//                getActivity(),
-//                list,
-//                R.layout.applist_item,
-//                new String[]{"appIcon","appName","packageName","type"},
-//                new int[]{
-//                        R.id.app_name,
-//                        R.id.research_last,
-//                        R.id.research_packagename,
-//                        R.id.text4
-//                }
-//        );
-//        // 这个不加 图片显示不出来
-//        simpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
-//            @Override
-//            public boolean setViewValue(View view, Object data, String textRepresentation) {
-//                if (view instanceof ImageView && data instanceof Drawable) {
-//                    ImageView iv = (ImageView) view;
-//                    iv.setImageDrawable((Drawable) data);
-//                    return true;
-//                } else {
-//                    return false;
-//                }
-//            }
-//        });
-//        listView.setAdapter(simpleAdapter);
-//    }
 }

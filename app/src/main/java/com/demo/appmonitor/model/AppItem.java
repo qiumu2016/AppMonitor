@@ -6,18 +6,17 @@ import android.graphics.drawable.Drawable;
 public class AppItem {
     private String appName; // 应用名
     private String packageName; // 包名
-    private Drawable appIcon; // App的Icon
+    private String image; // App的Icon
     private String type;      // 用来判断是否是系统应用
 
-    public AppItem(String appName, String packageName, Drawable appIcon, String type) {
+    public AppItem(String appName, String packageName, String image, String type) {
         this.appName = appName;
         this.packageName = packageName;
-        this.appIcon = appIcon;
+        this.image = image;
         this.type = type;
     }
 
-    public AppItem() {
-    }
+    public AppItem() { }
 
     public String getAppName() {
         return appName;
@@ -35,12 +34,12 @@ public class AppItem {
         this.packageName = packageName;
     }
 
-    public Drawable getAppIcon() {
-        return appIcon;
+    public String getImage() {
+        return image;
     }
 
-    public void setAppIcon(Drawable appIcon) {
-        this.appIcon = appIcon;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getType() {
