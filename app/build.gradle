@@ -39,5 +39,11 @@ dependencies {
     implementation 'com.orhanobut:dialogplus:1.11@aar'
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "com.dev.sacot41:scviewpager:0.0.4"
-
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc01"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation 'com.google.code.gson:gson:2.8.6'
 }

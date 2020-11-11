@@ -6,7 +6,12 @@
     <string name="nav_header_subtitle">demo@appmonitor.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
+    <string name="followers">贡献者</string>
+    <string name="following">跟随</string>
+    <string name="repositories">提交记录</string>
+    <string name="gists">主题帖</string>
+    <string name="user">用户名</string>
+    <string name="open_in_website">在浏览器中打开</string>
     <string name="menu_home">主页</string>
     <string name="app_list">应用序列</string>
     <string name="app_research">应用分析</string>

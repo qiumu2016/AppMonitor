@@ -1,69 +1,296 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<!--<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >-->
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.home.HomeFragment">
 
-        <TextView
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="100dp"
-            android:text="第一步：授权"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="30dp" />
+            android:id="@+id/appbar"
+            android:background="@color/colorPrimary"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-        <TextView
-            android:id="@+id/givePermission"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="20dp"
-            android:autoLink="all"
-            android:clickable="true"
-            android:text="打开授权页面进行授权！"
-            android:textColor="#3F51B5"
-            android:textSize="20dp" />
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:id="@+id/toolbar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:text="第二步：重启"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="30dp" />
+                    android:paddingTop="0dp"
+                    app:collapsedTitleGravity="start"
+                    app:expandedTitleGravity="top"
+                    app:expandedTitleMarginStart="80dp"
+                    app:expandedTitleMarginTop="60dp"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:layout_scrollFlags="scroll|snap">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="20dp"
-            android:clickable="true"
-            android:text="重启应用"
-            android:textColor="#000000"
-            android:textSize="20dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:text="第三步：使用"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="30dp" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|top"
+                            android:layout_marginTop="36dp"
+                            android:paddingStart="@dimen/spacing_normal"
+                            android:paddingEnd="@dimen/spacing_normal"
+                            android:paddingBottom="@dimen/spacing_normal">
 
-        <TextView
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/user_avatar"
+                                    android:layout_width="72dp"
+                                    android:layout_height="72dp"
+
+                                    android:layout_marginRight="@dimen/text_large"
+                                    android:src="@drawable/monitor"
+                                    android:transitionName="userAvatar" />
+
+                                <TextView
+                                    android:id="@+id/user_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toEndOf="@id/user_avatar"
+                                    android:text="AppMonitor"
+                                    android:textSize="27sp" />
+
+                                <TextView
+                                    android:id="@+id/user_location"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/user_name"
+                                    android:layout_marginLeft="3dp"
+                                    android:layout_toEndOf="@id/user_avatar"
+                                    android:text="Created at 10 2020" />
+
+                                <TextView
+                                    android:id="@+id/user_jointime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/user_location"
+                                    android:layout_marginLeft="3dp"
+                                    android:layout_toEndOf="@id/user_avatar"
+                                    android:text="Java"
+
+                                    />
+                        </RelativeLayout>
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="20dp"
-            android:clickable="true"
-            android:text="打开侧边栏查看应用信息"
-            android:textColor="#000000"
-            android:textSize="20dp" />
-</LinearLayout>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ><androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="5dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/fra_pro_username"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:freezesText="true"
+                                    android:lines="1"
+                                    android:textSize="@dimen/text_large"
+                                    android:textColor="?android:textColorPrimary"
+                                    android:paddingBottom="@dimen/spacing_small"
+                                    android:paddingEnd="@dimen/spacing_small"
+                                    android:paddingStart="@dimen/spacing_small"
+                                    android:paddingTop="@dimen/spacing_small"
+                                    android:text="To Analyze user habits"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:freezesText="true"
+                                    android:id="@+id/fra_pro_bio"
+                                    android:textColor="?android:textColorSecondary"
+                                    android:textSize="@dimen/text_small"
+                                    android:paddingBottom="@dimen/spacing_small"
+                                    android:paddingEnd="@dimen/spacing_small"
+                                    android:paddingStart="@dimen/spacing_small"
+                                    android:paddingTop="@dimen/spacing_small"
+                                    android:text="All rights reserved to USTC"/>
+
+                                <TextView
+                                    android:id="@+id/fra_pro_email"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="?android:selectableItemBackground"
+                                    android:clickable="true"
+                                    android:drawableStart="@drawable/ic_mail_secondary"
+                                    android:paddingBottom="@dimen/spacing_small"
+                                    android:freezesText="true"
+                                    android:paddingEnd="@dimen/spacing_small"
+                                    android:paddingStart="@dimen/spacing_small"
+                                    android:paddingTop="@dimen/spacing_small"
+                                    android:drawablePadding="@dimen/spacing_large"
+                                    android:textSize="@dimen/text_small"
+                                    android:textColor="?android:colorAccent"
+                                    android:text="wangdong@mail.ustc.edu.cn"
+                                    android:visibility="visible"/>
+
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:minHeight="64dp">
+
+
+
+                                        <LinearLayout
+                                            android:id="@+id/followers_lay"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_margin="@dimen/spacing_mini"
+                                            android:layout_weight="1"
+                                            android:background="?attr/selectableItemBackgroundBorderless"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                                <TextView
+                                                    android:id="@+id/fra_pro_followers_num"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="4"
+                                                    android:freezesText="true"
+                                                    android:textSize="@dimen/text_large"/>
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="@string/followers"
+                                                    android:freezesText="true"
+                                                    android:textSize="@dimen/text_mini"/>
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/following_lay"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_margin="@dimen/spacing_mini"
+                                            android:layout_weight="1"
+                                            android:background="?attr/selectableItemBackgroundBorderless"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                                <TextView
+                                                    android:id="@+id/fra_pro_followering_num"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="7"
+                                                    android:freezesText="true"
+                                                    android:textSize="@dimen/text_large"/>
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="@string/following"
+                                                    android:freezesText="true"
+                                                    android:textSize="@dimen/text_mini"/>
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/repos_lay"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_margin="@dimen/spacing_mini"
+                                            android:layout_weight="1"
+                                            android:background="?attr/selectableItemBackgroundBorderless"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                                <TextView
+                                                    android:id="@+id/fra_pro_repositories_num"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="10"
+                                                    android:freezesText="true"
+                                                    android:textSize="@dimen/text_large"/>
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="@string/repositories"
+                                                    android:textSize="@dimen/text_mini"/>
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/gists_lay"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_margin="@dimen/spacing_mini"
+                                            android:layout_weight="1"
+                                            android:background="?attr/selectableItemBackgroundBorderless"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                                <TextView
+                                                    android:id="@+id/fra_pro_gists_num"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="4"
+                                                    android:freezesText="true"
+                                                    android:textSize="@dimen/text_large"/>
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="@string/gists"
+                                                    android:textSize="@dimen/text_mini"/>
+                                        </LinearLayout>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    tools:context=".ui.fragment.ProfileStarredFragment"
+                                    android:orientation="vertical"
+                                    android:background="#F5F5F5">
+
+
+                                                <androidx.recyclerview.widget.RecyclerView
+                                                    android:id="@+id/recylerview_activity"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    />
+
+                                </LinearLayout>
+                        </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+
+        </androidx.core.widget.NestedScrollView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <!--  <TextView
+          android:id="@+id/givePermission"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="100dp"
+          android:layout_marginTop="20dp"
+          android:autoLink="all"
+          android:clickable="true"
+          android:text="打开授权页面进行授权！"
+          android:textColor="#3F51B5"
+          android:textSize="20dp" />-->

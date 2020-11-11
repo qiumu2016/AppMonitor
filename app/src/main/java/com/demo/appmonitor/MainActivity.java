@@ -4,10 +4,12 @@ import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Intent;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,6 +22,7 @@ import com.dev.sacot41.scviewpager.SCViewPager;
 import com.dev.sacot41.scviewpager.SCViewPagerAdapter;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -72,7 +75,26 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
+    //标题栏返回按钮的监听
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem menuItem) {
+//        if (menuItem.getItemId() == android.R.id.home) {
+//                finish();
+//                return true;
+//        }
+        switch (menuItem.getItemId()){
+            case R.id.open_in_website:
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                String uri = "https://github.com/qiumu2016/AppMonitor";
+                intent.setData(Uri.parse(uri));
+                startActivity(intent);
+                //finish();
+                break;
+            default :
+                break;
+        }
+        return false;
+    }
     /**
      * 判断有没有权限
      * @return
