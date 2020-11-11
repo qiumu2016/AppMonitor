@@ -15,6 +15,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.demo.appmonitor.MainActivity;
 import com.demo.appmonitor.MyDatabaseHelper;
 import com.demo.appmonitor.model.ResearchItem;
 
@@ -45,7 +46,13 @@ public class ResearchViewModel  extends ViewModel {
         //向applist中添加数据
         appList = getData();
         Log.i("dong", String.valueOf(appList.size()));
-        data.setValue((ArrayList<ResearchItem>) appList);
+        ((MainActivity) context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                data.setValue((ArrayList<ResearchItem>) appList);
+            }
+        });
+        //data.setValue((ArrayList<ResearchItem>) appList);
     }
 
     public List<ResearchItem> getData() throws PackageManager.NameNotFoundException {

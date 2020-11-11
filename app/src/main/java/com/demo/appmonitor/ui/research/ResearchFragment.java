@@ -70,6 +70,7 @@ public class ResearchFragment extends Fragment {
     private RecyclerView recyclerView;
     private View mContentView;
     private ProgressBar progressBar;
+    private Thread newThread;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -78,12 +79,20 @@ public class ResearchFragment extends Fragment {
         initRecyclerView();
         progressBar = mContentView.findViewById(R.id.reseach_progress_bar);
         recyclerView.setVisibility(View.GONE);
-        try {
-            researchViewModel.setContext(this.getContext());
-            researchViewModel.flashList();
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        researchViewModel.setContext(this.getContext());
+        newThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    researchViewModel.flashList();
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        newThread.start();
+
         researchViewModel.getList().observe(getViewLifecycleOwner(), new Observer<ArrayList<ResearchItem>>() {
             @Override
             public void onChanged(ArrayList<ResearchItem> researchItems) {
