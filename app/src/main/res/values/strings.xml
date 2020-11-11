@@ -5,7 +5,7 @@
     <string name="nav_header_title">AppMonitor</string>
     <string name="nav_header_subtitle">demo@appmonitor.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">选择时间范围</string>
 
     <string name="menu_home">主页</string>
     <string name="app_list">应用序列</string>
