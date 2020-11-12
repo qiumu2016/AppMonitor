@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
+import es.dmoral.toasty.Toasty;
 public class ProfileActivityAdapter extends RecyclerView.Adapter<ProfileActivityAdapter.ViewHolder> {
     private List<ProfileActivityItem> mActivityList;
     //初始化ViewHolder,用于缓存已经加载的数据
@@ -42,12 +43,30 @@ public class ProfileActivityAdapter extends RecyclerView.Adapter<ProfileActivity
     public ProfileActivityAdapter(List<ProfileActivityItem> activityList) {
         mActivityList = activityList;
     }
+
+
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.profile_activity_item, parent, false);
-        final ViewHolder holder = new ViewHolder(view);
+    public ProfileActivityAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.profile_activity_item, parent, false);
+        final ProfileActivityAdapter.ViewHolder holder = new ProfileActivityAdapter.ViewHolder(view);
+        holder.activityView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toasty.info(v.getContext(),"您点击了该提交记录" , Toast.LENGTH_SHORT,true).show();
+            }
+        });
+        holder.activityImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                String rep = mActivityList.get(position).getName();
+                Toasty.info(v.getContext(),"您点击了:" + rep, Toast.LENGTH_SHORT,true).show();
+            }
+        });
         return holder;
     }
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ProfileActivityItem mItem = mActivityList.get(position);
