@@ -151,13 +151,28 @@ public class ResearchFragment extends Fragment {
     }
 
     private void selectTime(){
-        final String[] dates = {new String()};
         Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-                        dates[0] = year+ "/" +(monthOfYear+1)+"/"+dayOfMonth+ " 00:00:00";
+                        String date = year+ "/" +(monthOfYear+1)+"/"+dayOfMonth+ " 00:00:00";
+
+                        //然后执行以下操作
+                        recyclerView.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.VISIBLE);
+                        Thread newThread2 = new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    researchViewModel.flashList(date);
+                                } catch (PackageManager.NameNotFoundException | ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        //异步加载新数据，在ViewModel中设置新的接受时间范围的函数，开新的thread进行加载
+                        newThread2.start();
                     }
                 },
                 now.get(Calendar.YEAR), // Initial year selection
@@ -168,21 +183,5 @@ public class ResearchFragment extends Fragment {
         dpd.setVersion(DatePickerDialog.Version.VERSION_2);
         dpd.show(getFragmentManager(), "DataPickerDialog");
 
-        //然后执行以下操作
-        recyclerView.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
-        Thread newThread2 = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Log.i("dong", dates[0]);
-                    researchViewModel.flashList(dates[0]);
-                } catch (PackageManager.NameNotFoundException | ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        //异步加载新数据，在ViewModel中设置新的接受时间范围的函数，开新的thread进行加载
-        newThread2.start();
     }
 }

@@ -43,6 +43,7 @@ public class ResearchViewModel  extends ViewModel {
 
         //向appList中添加数据L
         appList = getData(date);
+
         ((MainActivity) context).runOnUiThread(new Runnable() {
             @Override
             public void run() {
