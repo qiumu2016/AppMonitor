@@ -93,6 +93,7 @@ public class MyService extends Service {
 
             }
         }).start();
+        // 定时
         AlarmManager manger = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(this, MyReceiver.class);//广播接收
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, i, 0);//意图为开启广播

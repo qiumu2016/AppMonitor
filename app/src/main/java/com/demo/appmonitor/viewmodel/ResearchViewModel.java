@@ -133,6 +133,9 @@ public class ResearchViewModel  extends ViewModel {
 
 
             Long last = stats.getLastTimeUsed();
+            if (last < df.parse("2020/01/01 00:00:00").getTime()) {
+                continue;
+            }
             if (stats.getTotalTimeInForeground() >= 0) {
 
                 ResearchItem item = new ResearchItem();

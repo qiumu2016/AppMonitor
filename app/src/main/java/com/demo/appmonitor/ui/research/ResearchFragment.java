@@ -108,6 +108,7 @@ public class ResearchFragment extends Fragment {
             }
         };
 
+
         newThread.start();
 
         researchViewModel.getList().observe(getViewLifecycleOwner(), new Observer<ArrayList<ResearchItem>>() {
@@ -217,8 +218,10 @@ public class ResearchFragment extends Fragment {
                 lists.add(list);
             } while (cursor.moveToNext());
         }
+        
         cursor.close();
         dbHelper.close();
+
         // 对list 进行清洗
         for (int i = 0; i < lists.size(); i++) {
             int j = i + 1;
