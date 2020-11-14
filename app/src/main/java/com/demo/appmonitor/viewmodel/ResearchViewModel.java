@@ -52,7 +52,6 @@ public class ResearchViewModel  extends ViewModel {
                 data.setValue((ArrayList<ResearchItem>) appList);
             }
         });
-        //data.setValue((ArrayList<ResearchItem>) appList);
     }
 
     public List<ResearchItem> getData() throws PackageManager.NameNotFoundException {
@@ -68,8 +67,6 @@ public class ResearchViewModel  extends ViewModel {
                 String last_time = cursor.getString(cursor.getColumnIndex("last_time"));
                 String image = cursor.getString(cursor.getColumnIndex("image"));
                 String packageName = cursor.getString(cursor.getColumnIndex("package"));
-                Bitmap bitmap = BitmapFactory.decodeFile(image);
-                Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
                 ResearchItem item = new ResearchItem();
                 item.setImageId(image);
                 item.setPackageName(packageName);
@@ -80,7 +77,7 @@ public class ResearchViewModel  extends ViewModel {
         }
 
         cursor.close();
-        Log.i("dong","getData 获得到东西结束了");
+        Log.i("dong","getData 获得到东西结束了。 大小为：" + lists.size());
         return lists;
     }
 

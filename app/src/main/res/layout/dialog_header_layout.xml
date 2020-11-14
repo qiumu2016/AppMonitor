@@ -9,6 +9,6 @@
         android:lineHeight="100px"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
-        android:text="今天该应用每小时使用的次数">
+        android:text="该应用每小时使用的次数">
     </TextView>
 </LinearLayout>

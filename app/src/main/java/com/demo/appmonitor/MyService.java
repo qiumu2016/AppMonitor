@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.usage.EventStats;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
@@ -32,11 +33,12 @@ import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class MyService extends Service {
-    //    private MyBinder binder = new MyBinder();
     private Context context = this;
     private MyDatabaseHelper dbHelper;
 
@@ -65,8 +67,6 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, final int startId) {
-        Log.i("dong", "开始了");
-
         new Thread(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.P)
             @Override
@@ -75,24 +75,20 @@ public class MyService extends Service {
                 Date start_date = null;// 起始时间
                 Date end_date;// 结束时间就是现在
                 SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
                 try {
-                    start_date = df.parse("2020/11/09 00:00:00");
+                    start_date = df.parse("2020/10/01 00:00:00");
                     end_date = new Date();
-
                     store_xulie(start_date.getTime(), end_date.getTime());
-
                     store_data(start_date.getTime(), end_date.getTime());
 
                     Log.i("dong", "结束一个service");
-                } catch (ParseException | PackageManager.NameNotFoundException e) {
+                } catch (PackageManager.NameNotFoundException | ParseException e) {
                     e.printStackTrace();
                     Log.i("error", e.getMessage());
                 }
 
             }
         }).start();
-
         AlarmManager manger = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(this, MyReceiver.class);//广播接收
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, i, 0);//意图为开启广播
@@ -115,7 +111,6 @@ public class MyService extends Service {
 
         UsageStatsManager mUsmManager = (UsageStatsManager) context.getSystemService(USAGE_STATS_SERVICE);
         Map<String, UsageStats> map = mUsmManager.queryAndAggregateUsageStats(startTime, endTime);
-        Log.i("dong", "开始存储data");
         for (Map.Entry<String, UsageStats> entry : map.entrySet()) {
             UsageStats stats = entry.getValue();
             PackageManager pm = context.getPackageManager();
@@ -179,7 +174,6 @@ public class MyService extends Service {
                 db.insert("data", null, values);
             }
         }
-        Log.i("dong", "data存储结束");
 
     }
 
@@ -196,10 +190,10 @@ public class MyService extends Service {
         @SuppressLint("WrongConstant") UsageStatsManager mUsmManager = (UsageStatsManager) context.getSystemService("usagestats");
         UsageEvents events = mUsmManager.queryEvents(startTime, endTime);
 
-        Log.i("dong", "开始存储data_list");
         while (events.hasNextEvent()) {
             UsageEvents.Event e = new UsageEvents.Event();
             events.getNextEvent(e);
+
             String stime = dateFormat.format(new Date(e.getTimeStamp()));
             ContentValues values = new ContentValues();
             if (e != null) {
@@ -208,7 +202,6 @@ public class MyService extends Service {
                 db.insert("data_list", null, values);
             }
         }
-        Log.i("dong", "data_list 存储结束");
-
     }
+
 }
