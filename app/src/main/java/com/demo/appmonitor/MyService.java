@@ -78,11 +78,10 @@ public class MyService extends Service {
                 try {
                     start_date = df.parse("2020/11/05 00:00:00");
                     end_date = new Date();
-                    store_xulie(start_date.getTime(), end_date.getTime());
                     store_data(start_date.getTime(), end_date.getTime());
-
+                    store_xulie(start_date.getTime(), end_date.getTime());
                     Log.i("dong", "结束一个service");
-                } catch (PackageManager.NameNotFoundException | ParseException e) {
+                } catch (ParseException | PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                     Log.i("error", e.getMessage());
                 }
@@ -92,9 +91,10 @@ public class MyService extends Service {
         AlarmManager manger = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(this, MyReceiver.class);//广播接收
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, i, 0);//意图为开启广播
-        long triggerAtTime = SystemClock.elapsedRealtime();//开机至今的时间毫秒数
-        triggerAtTime = triggerAtTime + 10*1000;//比开机至今的时间增长10秒
-        manger.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pendingIntent);//设置为开机至今的模式，时间，PendingIntent
+
+        long triggerAtTime = SystemClock.elapsedRealtime();
+        triggerAtTime = triggerAtTime + 60*60*1000;//比开机至今的时间增长一个小时
+        manger.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pendingIntent);
 
         return super.onStartCommand(intent, flags, startId);
 

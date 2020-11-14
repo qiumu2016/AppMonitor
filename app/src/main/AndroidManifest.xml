@@ -20,6 +20,8 @@
             android:enabled="true"
             android:exported="true"></service>
 
+        <receiver android:name=".MyReceiver">
+        </receiver>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

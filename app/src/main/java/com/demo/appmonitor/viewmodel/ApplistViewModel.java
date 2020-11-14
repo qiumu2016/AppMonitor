@@ -63,7 +63,6 @@ public class ApplistViewModel extends ViewModel {
         if(ctx != null){
             // 1、获取packageManager
             pm = ctx.getPackageManager();
-
             // 2、获取应用列表，可以传入不同的type获取 系统程序 or 第三方应用
             ArrayList<AppItem> list = getAppList(FILTER_ALL_APP);
             return list;
