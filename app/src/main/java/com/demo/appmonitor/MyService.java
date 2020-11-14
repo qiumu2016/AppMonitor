@@ -45,13 +45,13 @@ public class MyService extends Service {
     public static final String CREATE_PHONE_DATA_LIST = "create table if not exists data_list ("
             + "id integer primary key autoincrement, "
             + "package text,"
-            + "stime text)";
+            + "stime INTEGER)";
 
     public static final String CREATE_PHONE_DATA = "create table if not exists data ("
             + "id integer primary key autoincrement, "
             + "name text, "
             + "package text,"
-            + "last_time text,"
+            + "last_time INTEGER,"
             + "image text)";
 
     public MyService() {
@@ -165,7 +165,8 @@ public class MyService extends Service {
             } catch (Exception e) {
                 Log.e("TAG", "", e);
             }
-            String last = dateFormat.format(new Date(stats.getLastTimeUsed()));
+//            String last = dateFormat.format(new Date(stats.getLastTimeUsed()));
+            Long last = stats.getLastTimeUsed();
             if (stats.getTotalTimeInForeground() >= 0) {
                 values.put("name", name);
                 values.put("image", image);
@@ -194,7 +195,8 @@ public class MyService extends Service {
             UsageEvents.Event e = new UsageEvents.Event();
             events.getNextEvent(e);
 
-            String stime = dateFormat.format(new Date(e.getTimeStamp()));
+//            String stime = dateFormat.format(new Date(e.getTimeStamp()));
+            Long stime = e.getTimeStamp();
             ContentValues values = new ContentValues();
             if (e != null) {
                 values.put("package", e.getPackageName());

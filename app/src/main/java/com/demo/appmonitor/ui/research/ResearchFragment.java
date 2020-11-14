@@ -2,7 +2,6 @@ package com.demo.appmonitor.ui.research;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
@@ -58,6 +57,7 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -93,8 +93,12 @@ public class ResearchFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    researchViewModel.flashList();
-                } catch (PackageManager.NameNotFoundException e) {
+                    // 默认是现在的时间 时间戳 -> str
+                    Date date = new Date();
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    String date_str = df.format(date);
+                    researchViewModel.flashList(date_str);
+                } catch (PackageManager.NameNotFoundException | ParseException e) {
                     e.printStackTrace();
                 }
             }
@@ -145,23 +149,40 @@ public class ResearchFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     private void selectTime(){
-        //注意，有多种时间选择器可以使用，东哥最好找一个适合自己的，这个只是样例
-        int year = 2020,month = 11,day = 10;
-        DatePickerDialog dialog = new DatePickerDialog(getActivity(), AlertDialog.THEME_HOLO_LIGHT,
-            new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDayOfMonth) {
-                    //修改textView
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(selectedYear, selectedMonth, selectedDayOfMonth);
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("MM月dd日", Locale.CHINA);
-                }
-            }, year, month, day);
-        dialog.show();
+        final String[] dates = {new String()};
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog dpd = DatePickerDialog.newInstance(
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                        dates[0] = year+ "/" +(monthOfYear+1)+"/"+dayOfMonth+ " 00:00:00";
+                    }
+                },
+                now.get(Calendar.YEAR), // Initial year selection
+                now.get(Calendar.MONTH), // Initial month selection
+                now.get(Calendar.DAY_OF_MONTH) // Inital day selection
+        );
+        dpd.setThemeDark(true);
+        dpd.setVersion(DatePickerDialog.Version.VERSION_2);
+        dpd.show(getFragmentManager(), "DataPickerDialog");
+
         //然后执行以下操作
-        //recyclerView.setVisibility(View.GONE);
-        //progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        Thread newThread2 = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Log.i("dong", dates[0]);
+                    researchViewModel.flashList(dates[0]);
+                } catch (PackageManager.NameNotFoundException | ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
         //异步加载新数据，在ViewModel中设置新的接受时间范围的函数，开新的thread进行加载
+        newThread2.start();
     }
 }

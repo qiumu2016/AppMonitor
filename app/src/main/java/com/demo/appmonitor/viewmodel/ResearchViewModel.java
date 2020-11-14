@@ -3,12 +3,6 @@ package com.demo.appmonitor.viewmodel;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
-import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -19,7 +13,10 @@ import com.demo.appmonitor.MainActivity;
 import com.demo.appmonitor.MyDatabaseHelper;
 import com.demo.appmonitor.model.ResearchItem;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ResearchViewModel  extends ViewModel {
@@ -41,11 +38,11 @@ public class ResearchViewModel  extends ViewModel {
         this.context = context;
     }
 
-    public void flashList() throws PackageManager.NameNotFoundException {
+    public void flashList(String date) throws PackageManager.NameNotFoundException, ParseException {
         appList.clear();
-        //向applist中添加数据
-        appList = getData();
-        Log.i("dong", String.valueOf(appList.size()));
+
+        //向appList中添加数据L
+        appList = getData(date);
         ((MainActivity) context).runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -54,30 +51,30 @@ public class ResearchViewModel  extends ViewModel {
         });
     }
 
-    public List<ResearchItem> getData() throws PackageManager.NameNotFoundException {
+
+    public List<ResearchItem> getData(String lastTime) throws PackageManager.NameNotFoundException, ParseException {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date lastDate = df.parse(lastTime);
         List<ResearchItem> lists = new ArrayList<>();
         dbHelper = new MyDatabaseHelper(context, "phone_data.db", null, 1);
-        Log.i("dong","getData 进来了");
-
-        // orderBy加了个DESC，按last_time的倒序查询
-        Cursor cursor = dbHelper.getReadableDatabase().query("data", null, null, null, null, null, "last_time DESC");
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM data WHERE "+
+                "last_time <= ?",
+        new String[] { String.valueOf(lastDate.getTime())});
         if (cursor.moveToFirst()) {
             do {
                 String name = cursor.getString(cursor.getColumnIndex("name"));
-                String last_time = cursor.getString(cursor.getColumnIndex("last_time"));
+                Long last_time = cursor.getLong(cursor.getColumnIndex("last_time"));
                 String image = cursor.getString(cursor.getColumnIndex("image"));
                 String packageName = cursor.getString(cursor.getColumnIndex("package"));
                 ResearchItem item = new ResearchItem();
                 item.setImageId(image);
                 item.setPackageName(packageName);
-                item.setLastTime(last_time);
+                item.setLastTime(df.format(last_time));
                 item.setAppName(name);
                 lists.add(item);
             } while (cursor.moveToNext());
         }
-
         cursor.close();
-        Log.i("dong","getData 获得到东西结束了。 大小为：" + lists.size());
         return lists;
     }
 

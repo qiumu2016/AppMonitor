@@ -47,7 +47,7 @@ public class ApplistViewModel extends ViewModel {
         ((MainActivity) context).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                // 向applist中添加数据
+                // 向appList中添加数据
                 data.setValue((ArrayList<AppItem>) appList);
             }
         });

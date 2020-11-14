@@ -25,6 +25,8 @@ import com.jjoe64.graphview.UniqueLegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.orhanobut.dialogplus.DialogPlus;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -169,6 +171,8 @@ public class ResearchAdapter extends RecyclerView.Adapter<ResearchAdapter.ViewHo
 
     public Map<String, Map<String, Integer>> getDataList() {
         ArrayList<ArrayList<String>> lists = new ArrayList<>();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
         dbHelper = new MyDatabaseHelper(context, "phone_data.db", null, 1);
 
         // orderBy加了个DESC，按last_time的倒序查询
@@ -177,10 +181,10 @@ public class ResearchAdapter extends RecyclerView.Adapter<ResearchAdapter.ViewHo
         if (cursor.moveToFirst()) {
             do {
                 String aPackage = cursor.getString(cursor.getColumnIndex("package"));
-                String stime = cursor.getString(cursor.getColumnIndex("stime"));
+                Long stime = cursor.getLong(cursor.getColumnIndex("stime"));
                 ArrayList<String> list = new ArrayList<>();
                 list.add(aPackage);
-                list.add(stime);
+                list.add(df.format(stime));
                 lists.add(list);
             } while (cursor.moveToNext());
         }
