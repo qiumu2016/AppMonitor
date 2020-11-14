@@ -132,7 +132,13 @@ public class ResearchFragment extends Fragment {
         setHasOptionsMenu(true);
         researchViewModel = new ViewModelProvider(this).get(ResearchViewModel.class);
         researchViewModel.setContext(this.getActivity());
-        maps = getDataList();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                maps = getDataList();
+            }
+        }).start();
+
 
     }
 
