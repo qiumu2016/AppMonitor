@@ -76,7 +76,7 @@ public class MyService extends Service {
                 Date end_date;// 结束时间就是现在
                 SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 try {
-                    start_date = df.parse("2020/10/01 00:00:00");
+                    start_date = df.parse("2020/11/05 00:00:00");
                     end_date = new Date();
                     store_xulie(start_date.getTime(), end_date.getTime());
                     store_data(start_date.getTime(), end_date.getTime());
