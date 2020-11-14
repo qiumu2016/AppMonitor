@@ -80,6 +80,9 @@ public class ResearchFragment extends Fragment {
     private View mContentView;
     private ProgressBar progressBar;
     private Thread newThread;
+    private MyDatabaseHelper dbHelper;
+    public Map<String, Map<String, Integer>> maps;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -89,6 +92,7 @@ public class ResearchFragment extends Fragment {
         progressBar = mContentView.findViewById(R.id.reseach_progress_bar);
         recyclerView.setVisibility(View.GONE);
         researchViewModel.setContext(this.getContext());
+
         newThread = new Thread() {
             @Override
             public void run() {
@@ -110,6 +114,7 @@ public class ResearchFragment extends Fragment {
             @Override
             public void onChanged(ArrayList<ResearchItem> researchItems) {
                 ResearchAdapter adapter = new ResearchAdapter(researchItems);
+                adapter.setMaps(maps);
                 recyclerView.setAdapter(adapter);
                 adapter.setActivity(getActivity());
                 adapter.setContext(getContext());
@@ -127,6 +132,8 @@ public class ResearchFragment extends Fragment {
         setHasOptionsMenu(true);
         researchViewModel = new ViewModelProvider(this).get(ResearchViewModel.class);
         researchViewModel.setContext(this.getActivity());
+        maps = getDataList();
+
     }
 
     private void initRecyclerView() {
@@ -184,4 +191,56 @@ public class ResearchFragment extends Fragment {
         dpd.show(getFragmentManager(), "DataPickerDialog");
 
     }
+
+    public Map<String, Map<String, Integer>> getDataList() {
+        ArrayList<ArrayList<String>> lists = new ArrayList<>();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+        dbHelper = new MyDatabaseHelper(getActivity(), "phone_data.db", null, 1);
+
+        // orderBy加了个DESC，按last_time的倒序查询
+        Cursor cursor = dbHelper.getReadableDatabase()
+                .query("data_list", null, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String aPackage = cursor.getString(cursor.getColumnIndex("package"));
+                Long stime = cursor.getLong(cursor.getColumnIndex("stime"));
+                ArrayList<String> list = new ArrayList<>();
+                list.add(aPackage);
+                list.add(df.format(stime));
+                lists.add(list);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        dbHelper.close();
+        // 对list 进行清洗
+        for (int i = 0; i < lists.size(); i++) {
+            int j = i + 1;
+            while (j < lists.size() && (lists.get(i).get(0) == (lists.get(j).get(0)))) {
+                lists.remove(j);
+                j = i + 1;
+            }
+        }
+
+        final Map<String, Map<String, Integer>> maps = new HashMap<>();
+        for (int i = 0; i < lists.size(); i++) {
+            if (maps.containsKey(lists.get(i).get(0))) {
+                String temp = lists.get(i).get(1).substring(11, 13);
+                if (maps.get(lists.get(i).get(0)).containsKey(temp)) {
+                    Integer s = maps.get(lists.get(i).get(0)).get(temp);
+                    maps.get(lists.get(i).get(0)).put(temp, s + 1);
+                } else {
+                    maps.get(lists.get(i).get(0)).put(temp, 1);
+                }
+            } else {
+                Map<String, Integer> list = new HashMap<>();
+                String temp = lists.get(i).get(1).substring(11, 13);
+                list.put(temp, 1);
+                maps.put(lists.get(i).get(0), list);
+            }
+        }
+        return maps;
+    }
+
+
 }

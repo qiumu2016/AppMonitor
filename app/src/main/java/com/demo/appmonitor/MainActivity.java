@@ -1,5 +1,6 @@
 package com.demo.appmonitor;
 
+import android.app.Notification;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Intent;
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        startService(new Intent(MainActivity.this, MyService.class));
+
         /**
          * 判断有无权限
          */
@@ -53,11 +56,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
         }
 
-        /**
-         * 启动service
-         */
-        Intent intent1 = new Intent(MainActivity.this, MyService.class);
-        startService(intent1);
         // 加载启动页 view pager
         renderViewPager();
         // 加载toolbar - 也就是以前的那坨

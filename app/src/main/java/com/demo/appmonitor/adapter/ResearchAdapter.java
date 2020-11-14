@@ -16,9 +16,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.demo.appmonitor.MyService;
 import com.demo.appmonitor.R;
 import com.demo.appmonitor.model.ResearchItem;
 import com.demo.appmonitor.MyDatabaseHelper;
+import com.demo.appmonitor.viewmodel.ResearchViewModel;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.UniqueLegendRenderer;
@@ -38,6 +40,10 @@ public class ResearchAdapter extends RecyclerView.Adapter<ResearchAdapter.ViewHo
     private Context context;
     private Activity activity;
     private Map<String, Map<String, Integer>> maps;
+
+    public void setMaps(Map<String, Map<String, Integer>> maps) {
+        this.maps = maps;
+    }
 
     public void setContext(Context context) {
         this.context = context;
@@ -73,7 +79,6 @@ public class ResearchAdapter extends RecyclerView.Adapter<ResearchAdapter.ViewHo
     public ResearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.research_list_item, parent, false);
         final ResearchAdapter.ViewHolder holder = new ResearchAdapter.ViewHolder(view);
-        maps = getDataList();
         holder.researchItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,11 +103,7 @@ public class ResearchAdapter extends RecyclerView.Adapter<ResearchAdapter.ViewHo
                         break;
                     }
                 }
-                for (Map.Entry<String, Integer> entry : demo.entrySet()) {
-                    String mapKey = entry.getKey();
-                    Integer val = entry.getValue();
-                    Log.i("maps", mapKey + "时 ->" + val + "次数");
-                }
+
                 GraphView graph = (GraphView) activity.findViewById(R.id.graph);
 
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
@@ -130,8 +131,6 @@ public class ResearchAdapter extends RecyclerView.Adapter<ResearchAdapter.ViewHo
                         new DataPoint(21, demo.containsKey("21") ? demo.get("21") : 0),
                         new DataPoint(22, demo.containsKey("22") ? demo.get("22") : 0),
                         new DataPoint(23, demo.containsKey("23") ? demo.get("23") : 0),
-                        new DataPoint(24,  0),
-                        new DataPoint(25,  0),
                 });
                 series.setAnimated(true);
                 series.setDrawBackground(true);
@@ -169,54 +168,5 @@ public class ResearchAdapter extends RecyclerView.Adapter<ResearchAdapter.ViewHo
         return mItemlist.size();
     }
 
-    public Map<String, Map<String, Integer>> getDataList() {
-        ArrayList<ArrayList<String>> lists = new ArrayList<>();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
-        dbHelper = new MyDatabaseHelper(context, "phone_data.db", null, 1);
-
-        // orderBy加了个DESC，按last_time的倒序查询
-        Cursor cursor = dbHelper.getReadableDatabase()
-                .query("data_list", null, null, null, null, null, null);
-        if (cursor.moveToFirst()) {
-            do {
-                String aPackage = cursor.getString(cursor.getColumnIndex("package"));
-                Long stime = cursor.getLong(cursor.getColumnIndex("stime"));
-                ArrayList<String> list = new ArrayList<>();
-                list.add(aPackage);
-                list.add(df.format(stime));
-                lists.add(list);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        // 对list 进行清洗
-        for (int i = 0; i < lists.size(); i++) {
-            int j = i + 1;
-            while (j < lists.size() && (lists.get(i).get(0) == (lists.get(j).get(0)))) {
-                lists.remove(j);
-                j = i + 1;
-            }
-        }
-
-        final Map<String, Map<String, Integer>> maps = new HashMap<>();
-        for (int i = 0; i < lists.size(); i++) {
-            if (maps.containsKey(lists.get(i).get(0))) {
-                String temp = lists.get(i).get(1).substring(11, 13);
-                if (maps.get(lists.get(i).get(0)).containsKey(temp)) {
-                    Integer s = maps.get(lists.get(i).get(0)).get(temp);
-                    maps.get(lists.get(i).get(0)).put(temp, s + 1);
-                } else {
-                    maps.get(lists.get(i).get(0)).put(temp, 1);
-                }
-            } else {
-                Map<String, Integer> list = new HashMap<>();
-                String temp = lists.get(i).get(1).substring(11, 13);
-                list.put(temp, 1);
-                maps.put(lists.get(i).get(0), list);
-            }
-        }
-        return maps;
-    }
 
 }

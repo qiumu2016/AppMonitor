@@ -139,8 +139,6 @@ public class ApplistViewModel extends ViewModel {
         String image = context.getFilesDir() + File.separator + name + ".png";
         appInfo.setImage(image); // 应用图标
 
-        // /data/user/0/com.demo.appmonitor/files/YouTube.png
-        Log.i("image",image);
 
         appInfo.setAppName(applicationInfo.loadLabel(pm).toString()); // 应用名
         appInfo.setPackageName(applicationInfo.packageName); // 包名
