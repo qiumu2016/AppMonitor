@@ -62,7 +62,7 @@ public class PredictionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 OkHttpClient client = new OkHttpClient();
                 Request request = new Request.Builder()
-                        .url("127.0.0.1:8000/demo/?app1=1&app2=0")
+                        .url("http://www.baidu.com")
                         .get()
                         .build();
                 client.newCall(request).enqueue(new Callback() {

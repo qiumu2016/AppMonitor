@@ -22,6 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
 public class ProfileActivityAdapter extends RecyclerView.Adapter<ProfileActivityAdapter.ViewHolder> {
     private List<ProfileActivityItem> mActivityList;
+    private String[] choose = new String[][2];
     //初始化ViewHolder,用于缓存已经加载的数据
     static class ViewHolder extends RecyclerView.ViewHolder {
         View activityView;
@@ -61,6 +62,9 @@ public class ProfileActivityAdapter extends RecyclerView.Adapter<ProfileActivity
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 String rep = mActivityList.get(position).getName();
+                if(choose.length < 2){
+                    choose[choose.length+1] = rep;
+                }
                 Toasty.info(v.getContext(),"您点击了:" + rep, Toast.LENGTH_SHORT,true).show();
             }
         });
