@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+
             android:gravity="center_vertical">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -34,13 +35,16 @@
                 android:textColor="@color/colorAccent"/>
 
             <TextView
-                android:id="@+id/profile_starred_time"
+                android:id="@+id/choosed_item"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
                 android:layout_gravity="top"
+                android:text="choosed"
+                android:visibility="invisible"
                 android:textSize="@dimen/text_mini" />
+
         </LinearLayout>
 
         <TextView

@@ -1,5 +1,7 @@
 package com.demo.appmonitor.ui.prediction;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 
 
@@ -14,18 +16,25 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.ParcelUuid;
 import android.os.ResultReceiver;
 import android.util.Log;
 import android.view.View;
 
+import android.widget.Toast;
 import com.demo.appmonitor.R;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -38,6 +47,9 @@ import okhttp3.Response;
 public class PredictionActivity extends AppCompatActivity {
     private List<ProfileActivityItem> activityList = new ArrayList<ProfileActivityItem>();;
     FloatingActionButton fab1, fab2, fab3; // 用于显示三个返回的预测应用
+    private int []data_1 = new int[3]; // 返回的应用序列号
+    private String []package_1 = new String[]{"","",""}; // 返回的包名
+    public ProfileActivityAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -56,24 +68,47 @@ public class PredictionActivity extends AppCompatActivity {
         fab1 = (FloatingActionButton) findViewById(R.id.fab1);
         fab2 = (FloatingActionButton) findViewById(R.id.fab2);
         fab3 = (FloatingActionButton) findViewById(R.id.fab3);
+
         // 点击用于从网络获取信息？
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String a = adapter.getChooseA();
+                String b = adapter.getChooseB();
                 OkHttpClient client = new OkHttpClient();
                 Request request = new Request.Builder()
-                        .url("http://www.baidu.com")
+
+                        .url("http://192.168.189.1:8000/demo/?app1=1&app2=0")
                         .get()
+                        .addHeader(a, b)
                         .build();
                 client.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                        Log.e("error","网络未连接");
+                        Log.e("error",e.getMessage());
                     }
 
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        onsuccess(call,response);
+                        String jsonData = response.body().string();
+                        JSONObject Jobject = null;
+                        try {
+                            Jobject = new JSONObject(jsonData);
+                            JSONArray data = Jobject.getJSONArray("data");
+                            JSONArray package_name = Jobject.getJSONArray("package_name");
+                            data_1[0] = (int) data.get(0);
+                            data_1[1] = (int) data.get(1);
+                            data_1[2] = (int) data.get(2);
+                            package_1[0] = (String) package_name.get(0);
+                            package_1[1] = (String) package_name.get(1);
+                            package_1[2] = (String) package_name.get(2);
+                            Log.i("dong", data_1[0] + package_1[0]);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        
+
+//                        onsuccess(call,response);
                     }
                 });
 
@@ -81,15 +116,28 @@ public class PredictionActivity extends AppCompatActivity {
         });
     }
     // 接受信息成功用于显示
+    @SuppressLint("WrongConstant")
     private void onsuccess(@NotNull Call call, @NotNull Response response) throws IOException {
-        fab1.setVisibility(0);
-        fab2.setVisibility(0);
-        fab3.setVisibility(0);
+        runOnUiThread(new Runnable() {
+            @Override
+                public void run() {
+                Context context = PredictionActivity.this;
+                // 在这里加入推荐应用的图像即可
+                fab1.setImageResource(R.drawable.bilibili);
+                fab1.setVisibility(0);
+                fab2.setImageResource(R.drawable.tengxun);
+                fab2.setVisibility(0);
+                fab3.setImageResource(R.drawable.taobak);
+                fab3.setVisibility(0);
+            }
+        });
+
     }
     private void initRecyclerView() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recylerview_activity);
-        ProfileActivityAdapter adapter = new ProfileActivityAdapter(activityList);
+        adapter = new ProfileActivityAdapter(activityList);
         recyclerView.setAdapter(adapter);
+        adapter.usingByPrediction();
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
     //应用序列，写死
