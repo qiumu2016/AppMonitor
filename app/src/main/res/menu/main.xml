@@ -8,4 +8,9 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         />
+    <item
+        android:id="@+id/action_analyse"
+        android:orderInCategory="100"
+        android:title="@string/analyse"
+        />
 </menu>

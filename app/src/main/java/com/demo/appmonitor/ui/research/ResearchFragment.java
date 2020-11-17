@@ -2,11 +2,13 @@ package com.demo.appmonitor.ui.research;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.app.Presentation;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -51,6 +53,7 @@ import com.demo.appmonitor.MyDatabaseHelper;
 import com.demo.appmonitor.R;
 import com.demo.appmonitor.adapter.ResearchAdapter;
 import com.demo.appmonitor.model.ResearchItem;
+import com.demo.appmonitor.ui.prediction.PredictionActivity;
 import com.demo.appmonitor.viewmodel.ResearchViewModel;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
@@ -158,6 +161,10 @@ public class ResearchFragment extends Fragment {
         switch (item.getItemId()){
             case R.id.action_settings:
                 selectTime();
+                return true;
+            case R.id.action_analyse:
+                Intent intent = new Intent(getContext(), PredictionActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

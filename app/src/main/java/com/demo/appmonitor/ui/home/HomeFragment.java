@@ -61,34 +61,34 @@ public class HomeFragment extends Fragment {
         inflater.inflate(R.menu.profile_menu, menu);
     }
     private void initRecyclerView() {
-        RecyclerView recyclerView = (RecyclerView) mContentView.findViewById(R.id.recylerview_activity);
-        ProfileActivityAdapter adapter = new ProfileActivityAdapter(activityList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-    }
+    RecyclerView recyclerView = (RecyclerView) mContentView.findViewById(R.id.recylerview_activity);
+    ProfileActivityAdapter adapter = new ProfileActivityAdapter(activityList);
+    recyclerView.setAdapter(adapter);
+    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+}
     //用于初始化假数据
     private void initData() {
 
-            ProfileActivityItem apple = new ProfileActivityItem(("quimu2016"), R.drawable.yue, "添加时间选择器样例,完成异步加载，删除不必要代码");
-            activityList.add(apple);
-            ProfileActivityItem banana = new ProfileActivityItem(("E83737664"), R.drawable.geng, "加入了邮箱跳转和浏览器中打开");
-            activityList.add(banana);
-            ProfileActivityItem orange = new ProfileActivityItem(("LinearLaw"), R.drawable.yang, "图片改名，新增view pager");
-            activityList.add(orange);
-            ProfileActivityItem watermelon = new ProfileActivityItem(("dongw0213"), R.drawable.dong26163883, "调整应用分析样式");
-            activityList.add(watermelon);
-            ProfileActivityItem pear = new ProfileActivityItem( ("dongw0213"), R.drawable.dong26163883, "更新fragment，启动应用授权验证，应用分析界面调整，sql按时间倒序");
-            activityList.add(pear);
-            ProfileActivityItem grape = new ProfileActivityItem( ("LinearLaw"), R.drawable.yang, "应用序列展示当前应用");
-            activityList.add(grape);
-            ProfileActivityItem pineapple = new ProfileActivityItem( ("E83737664"), R.drawable.geng, "增加了主页的界面");
-            activityList.add(pineapple);
-            ProfileActivityItem strawberry = new ProfileActivityItem( ("quimu2016"), R.drawable.yue, "删除AppInfo，改用AppItem");
-            activityList.add(strawberry);
-            ProfileActivityItem cherry = new ProfileActivityItem( ("quimu2016"), R.drawable.yue, "新增应用序列获取所有应用列表 - not completed");
-            activityList.add(cherry);
-            ProfileActivityItem mango = new ProfileActivityItem( ("dongw0213"), R.drawable.dong26163883, "修改ui");
-            activityList.add(mango);
+        ProfileActivityItem apple = new ProfileActivityItem(("quimu2016"), R.drawable.yue, "添加时间选择器样例,完成异步加载，删除不必要代码");
+        activityList.add(apple);
+        ProfileActivityItem banana = new ProfileActivityItem(("E83737664"), R.drawable.geng, "加入了邮箱跳转和浏览器中打开");
+        activityList.add(banana);
+        ProfileActivityItem orange = new ProfileActivityItem(("LinearLaw"), R.drawable.yang, "图片改名，新增view pager");
+        activityList.add(orange);
+        ProfileActivityItem watermelon = new ProfileActivityItem(("dongw0213"), R.drawable.dong26163883, "调整应用分析样式");
+        activityList.add(watermelon);
+        ProfileActivityItem pear = new ProfileActivityItem( ("dongw0213"), R.drawable.dong26163883, "更新fragment，启动应用授权验证，应用分析界面调整，sql按时间倒序");
+        activityList.add(pear);
+        ProfileActivityItem grape = new ProfileActivityItem( ("LinearLaw"), R.drawable.yang, "应用序列展示当前应用");
+        activityList.add(grape);
+        ProfileActivityItem pineapple = new ProfileActivityItem( ("E83737664"), R.drawable.geng, "增加了主页的界面");
+        activityList.add(pineapple);
+        ProfileActivityItem strawberry = new ProfileActivityItem( ("quimu2016"), R.drawable.yue, "删除AppInfo，改用AppItem");
+        activityList.add(strawberry);
+        ProfileActivityItem cherry = new ProfileActivityItem( ("quimu2016"), R.drawable.yue, "新增应用序列获取所有应用列表 - not completed");
+        activityList.add(cherry);
+        ProfileActivityItem mango = new ProfileActivityItem( ("dongw0213"), R.drawable.dong26163883, "修改ui");
+        activityList.add(mango);
 
     }
 
